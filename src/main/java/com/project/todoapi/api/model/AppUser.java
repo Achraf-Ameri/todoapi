@@ -1,9 +1,12 @@
 package com.project.todoapi.api.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class AppUser {
@@ -14,7 +17,7 @@ public class AppUser {
     private String userName;
     private UserRole userRole;
     private int belongedCompanyId;
-
+    
     public AppUser() {}
 
     public AppUser(int id, String name, UserRole role, int companyId) {
@@ -52,7 +55,7 @@ public class AppUser {
         return this.belongedCompanyId;
     }
 
-    public void setBelongedCompanyId(int company) {
+    public void setBelongedCompany(int company) {
         this.belongedCompanyId = company;
     }
 }

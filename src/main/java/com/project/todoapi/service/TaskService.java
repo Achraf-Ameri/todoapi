@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.todoapi.api.model.AppUser;
 import com.project.todoapi.api.model.Task;
 import com.project.todoapi.data.TaskData;
 
@@ -19,12 +20,21 @@ public class TaskService {
         return taskdata.findAll();
     }
 
-    public List<Task> getTasksByUserId(Integer userId) {
-        return taskdata.findByUserId(userId);
-    }
-
     public Optional<Task> getTaskById(Integer id) {
         return taskdata.findById(id);
+    }
+
+    public List<Task> getTasksByUserRole(AppUser user) {
+        switch (user.getUserRole()) {
+            case STANDARD:
+                return taskdata.findByUser(user);
+            case COMPANY_ADMIN:
+                return taskdata.findByUser_BelongedCompanyId(user.getBelongedCompanyId());
+            case SUPER_USER:
+                return taskdata.findAll();
+            default:
+                throw new IllegalStateException("Unknown User Role : " + user.getUserRole());
+        }
     }
 
     public Task createTask(Task task) {

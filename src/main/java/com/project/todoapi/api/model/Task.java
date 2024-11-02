@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Task {
@@ -14,15 +16,19 @@ public class Task {
     private String taskTitle;
     private String taskDescription;
     private TaskStatus taskStatus;
-    private int userId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id") 
+    private AppUser user;
 
     public Task() {}
 
-    public Task(int id, String title, String description, TaskStatus status){
+    public Task(int id, String title, String description, TaskStatus status, AppUser user){
         this.taskId = id;
         this.taskTitle = title;
         this.taskDescription = description;
         this.taskStatus = status;
+        this.user = user;
     }
 
     public int getTaskId() {
@@ -57,11 +63,11 @@ public class Task {
         this.taskStatus = status;
     }
 
-    public int getUserId() {
-        return this.userId;
+    public AppUser getUser() {
+        return this.user;
     }
 
-    public void setUserId(int id) {
-        this.userId = id;
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 }
