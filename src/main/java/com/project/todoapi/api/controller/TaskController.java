@@ -48,8 +48,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    public Task createTask(@RequestBody Task task, @RequestParam Integer userId) {
+        return taskService.createTask(task, userId);
     }
 
     @DeleteMapping("/{id}")

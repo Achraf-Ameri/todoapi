@@ -13,21 +13,21 @@ import com.project.todoapi.data.UserData;
 public class UserService {
 
     @Autowired
-    private UserData userdata;
+    private UserData userData;
 
     public List<AppUser> getAllUsers() {
-        return userdata.findAll();
+        return userData.findAll();
     }
 
     public Optional<AppUser> getUserById(Integer id) {
-        return userdata.findById(id);
+        return userData.findById(id);
     }
 
     public AppUser createUser(AppUser user) {
-        return userdata.save(user);
+        return userData.save(user);
     }
 
     public void deleteUser(Integer id) {
-        userdata.deleteById(id);
+        userData.deleteById(id);
     }
 }

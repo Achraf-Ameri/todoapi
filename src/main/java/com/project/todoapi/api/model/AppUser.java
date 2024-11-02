@@ -2,6 +2,7 @@ package com.project.todoapi.api.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,10 @@ public class AppUser {
     private String userName;
     private UserRole userRole;
     private int belongedCompanyId;
-    
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
     public AppUser() {}
 
     public AppUser(int id, String name, UserRole role, int companyId) {

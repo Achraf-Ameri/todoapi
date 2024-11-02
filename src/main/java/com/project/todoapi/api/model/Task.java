@@ -18,7 +18,7 @@ public class Task {
     private TaskStatus taskStatus;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") 
+    @JoinColumn(name = "user_id", nullable = false) 
     private AppUser user;
 
     public Task() {}

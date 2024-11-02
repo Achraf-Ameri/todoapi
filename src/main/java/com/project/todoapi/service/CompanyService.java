@@ -13,21 +13,21 @@ import com.project.todoapi.data.CompanyData;
 public class CompanyService {
 
     @Autowired
-    private CompanyData companydata;
+    private CompanyData companyData;
 
     public List<Company> getAllCompanies() {
-        return companydata.findAll();
+        return companyData.findAll();
     }
 
     public Optional<Company> getCompanyById(Integer id) {
-        return companydata.findById(id);
+        return companyData.findById(id);
     }
 
     public Company createCompany(Company company) {
-        return companydata.save(company);
+        return companyData.save(company);
     }
 
     public void deleteCompany(Integer id) {
-        companydata.deleteById(id);
+        companyData.deleteById(id);
     }
 }

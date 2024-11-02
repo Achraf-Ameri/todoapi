@@ -9,39 +9,51 @@ import org.springframework.stereotype.Service;
 import com.project.todoapi.api.model.AppUser;
 import com.project.todoapi.api.model.Task;
 import com.project.todoapi.data.TaskData;
+import com.project.todoapi.data.UserData;
 
 @Service
 public class TaskService {
 
     @Autowired
-    private TaskData taskdata;
+    private TaskData taskData;
+
+    @Autowired
+    private UserData userData;
 
     public List<Task> getAllTasks() {
-        return taskdata.findAll();
+        return taskData.findAll();
     }
 
     public Optional<Task> getTaskById(Integer id) {
-        return taskdata.findById(id);
+        return taskData.findById(id);
     }
 
     public List<Task> getTasksByUserRole(AppUser user) {
         switch (user.getUserRole()) {
             case STANDARD:
-                return taskdata.findByUser(user);
+                return taskData.findByUser(user);
             case COMPANY_ADMIN:
-                return taskdata.findByUser_BelongedCompanyId(user.getBelongedCompanyId());
+                return taskData.findByUser_BelongedCompanyId(user.getBelongedCompanyId());
             case SUPER_USER:
-                return taskdata.findAll();
+                return taskData.findAll();
             default:
                 throw new IllegalStateException("Unknown User Role : " + user.getUserRole());
         }
     }
 
-    public Task createTask(Task task) {
-        return taskdata.save(task);
+    public Task createTask(Task task, Integer userId) {
+        AppUser user = userData.findById(userId).orElse(null);
+        
+        if (user == null) {
+            throw new RuntimeException("User not found with id: " + userId);
+        }
+
+        task.setUser(user);
+        
+        return taskData.save(task);
     }
 
     public void deleteTask(Integer id) {
-        taskdata.deleteById(id);
+        taskData.deleteById(id);
     }
 }
